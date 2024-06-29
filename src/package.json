@@ -1,0 +1,34 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon src/server.js"
+  },
+  "author": "Kuldeep Patel",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "child_process": "^1.0.2",
+    "cloudinary": "^2.2.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-validator": "^7.1.0",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
+    "mongoose": "^8.4.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.1.0",
+    "numpy": "^0.0.1",
+    "path": "^0.12.7",
+    "pickle": "^0.2.0",
+    "picklejs": "^0.101.0",
+    "python-shell": "^5.0.0"
+  }
+}

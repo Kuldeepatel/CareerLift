@@ -1,0 +1,39 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+# Sample data
+data = {
+    'attendance': [0.9, 0.85, 0.78, 0.95, 0.87],
+    'task_completion': [0.8, 0.6, 0.7, 0.9, 0.75],
+    'skills': [4, 3, 3, 5, 4],
+    'achievements': [3, 2, 2, 5, 3],
+    'team_lead': [4, 3, 3, 5, 4],
+    'promotion': [1, 0, 0, 1, 0]  # 1 means promoted, 0 means not promoted
+}
+
+df = pd.DataFrame(data)
+
+# Features and target variable
+X = df[['attendance', 'task_completion', 'skills', 'achievements', 'team_lead']]
+y = df['promotion']
+
+# Split the data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Standardize the data
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Train the model
+model = LinearRegression()
+model.fit(X_train_scaled, y_train)
+
+# Predict and evaluate
+y_pred = model.predict(X_test_scaled)
+mse = mean_squared_error(y_test, y_pred)
+print(f'Mean Squared Error: {mse}')

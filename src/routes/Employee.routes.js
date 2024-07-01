@@ -23,6 +23,6 @@ router.post('/markAttendance', markAttendance);
 router.get('/attendance/:date', getAttendanceByDate);
 
 // get  Employee by ID
-router.get('/getallemployee/:EmployeeID', getAllEmployee);
+router.get('/:employeeID', getAllEmployee);
 
 module.exports = router;

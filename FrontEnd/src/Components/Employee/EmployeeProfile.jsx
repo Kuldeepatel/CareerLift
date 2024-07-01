@@ -25,7 +25,7 @@ const EmployeeProfile = () => {
         const storedEmployee = localStorage.getItem('employee');
         if (storedEmployee) {
           const parsedEmployee = JSON.parse(storedEmployee);
-          const response = await axios.get(`http://localhost:8000/api/v1/employee/getallemployee/${parsedEmployee.EmployeeID}`);
+          const response = await axios.get(`http://localhost:8000/api/v1/employee/${parsedEmployee.EmployeeID}`);
           setEmployee(response.data);
           const tasksResponse = await axios.get(`http://localhost:8000/api/v1/task/${parsedEmployee.EmployeeID}`);
           setPendingTasks(tasksResponse.data);

@@ -176,8 +176,8 @@ const refreshAccessToken = async (req, res) => {
 // to  employee by ID
 const getAllEmployee = async (req, res) => {
   try {
-    const { EmployeeID } = req.params; 
-    const employee = await Employee.findOne({ EmployeeID: Number(EmployeeID) }).select('-Password -refreshToken');
+    const { employeeID } = req.params; 
+    const employee = await Employee.findOne({ EmployeeID: employeeID }).select('-Password -refreshToken');
     res.status(200).json(employee);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });

@@ -10,7 +10,7 @@ def train_model(data_path):
     # load csv data
     df = pd.read_csv(data_path)
     
-    # change categorical Education data into numerical data
+    # change Education data into numerical data
     
     education_mapping = {'B.Tech':0, 'M.Tech':1, 'PhD':2,'MBA':1,'BBA':0,'BSC':0,'MSC':1}
     df['Qualifications'] = df['Qualifications'].replace(education_mapping)
@@ -29,13 +29,14 @@ def train_model(data_path):
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
     
-    # Train logistic regression model
+    #  logistic regression model
     model = LogisticRegression(max_iter=1000)
     model.fit(X_train_scaled, y_train)
     
     return model, scaler
 
 def predict_new_data(model, new_data, scaler):
+    
     # Transform new data using scaler
     new_data_columns = ['Age','Qualifications','Tasks_completed', 'Due_tasks', 'Awards', 'Experience','AttendancePercentage']
     new_data_df = pd.DataFrame([new_data], columns=new_data_columns)

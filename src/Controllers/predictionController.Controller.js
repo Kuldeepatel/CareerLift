@@ -118,7 +118,7 @@ async function predict(req, res) {
 
             return { 
                 EmployeeID: employee.EmployeeID,
-                Promotion: promotionPrediction === '1' ? 'Promoted' : 'Not Promoted',
+                Promotion: promotionPrediction === '1' ? 'Eligible' : 'Not Eligible',
                 PromotionScore: calculatePromotionScore(attributes)
             };
         }));

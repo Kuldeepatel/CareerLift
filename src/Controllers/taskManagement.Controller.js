@@ -3,20 +3,43 @@ const Task = require('../Models/TaskManagementSchema.Model');
 //  to create or update task
 const createTask = async (req, res) => {
     const { createdBy } = req.params; 
-    const { taskID,title, description, status, dueDate, assignedTo,completionDate } = req.body;
-
-    if (!taskID ) {
-        return res.status(400).send("taskID are required");
+    const { taskID, title, description, status, dueDate, assignedTo, completionDate } = req.body
+    if (!taskID) {
+        return res.status(400).send("TaskID is required");
     }
+
     try {
         const createdDate = getCurrentDate();
+        let assignedToArray = [];
+        if (assignedTo) {
+            if (typeof assignedTo === 'string') {
+                assignedToArray = assignedTo.split(',').map(id => id.trim());
+            } else if (Array.isArray(assignedTo)) {
+                assignedToArray = assignedTo.map(id => id.toString());
+            } else {
+                assignedToArray = [assignedTo.toString()];
+            }
+        }
 
         // Create or update task in the database
-      const task = await Task.findOneAndUpdate(
+        const task = await Task.findOneAndUpdate(
             { taskID },
-            { $set: { taskID, title, description, status, dueDate, assignedTo, createdBy, createdDate,completionDate } },
+            {
+                $set: {
+                    taskID,
+                    title,
+                    description,
+                    status,
+                    dueDate,
+                    assignedTo: assignedToArray,
+                    createdBy,
+                    createdDate,
+                    completionDate
+                }
+            },
             { new: true, upsert: true, setDefaultsOnInsert: true }
         );
+
         return res.status(200).send("Task created or updated successfully");
     } catch (error) {
         return res.status(500).send("Failed to create or update task");

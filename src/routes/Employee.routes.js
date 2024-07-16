@@ -18,7 +18,6 @@ router.get('/attendance', getEmployee);
 
 // Mark Attendance
 router.post('/markAttendance', markAttendance);
-
 // met Attendance by Date
 router.get('/attendance/:date', getAttendanceByDate);
 

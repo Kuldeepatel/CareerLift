@@ -39,11 +39,11 @@ const EmployeeSidebar = () => {
   const menuItems = [
     { to: "/employeedashboard", icon: RiDashboardLine, text: "Dashboard" },
     { to: "/attendance", icon: PiCheckSquareOffset, text: "Attendance" },
-    { to: "/employee", icon: IoPeopleOutline, text: "Employee" },
+    { to: "/employeeprofile", icon: IoPeopleOutline, text: "Profile" },
     { to: "/leave", icon: HiOutlineNewspaper, text: "Leave Application" },
     { to: "/promotionranking", icon: MdOutlineLeaderboard, text: "Leaderboard" },
-    { to: "/task", icon: GoTasklist, text: "Task Management" },
-    { to: "/demo", icon: GoTasklist, text: "Demo" },
+    { to: "/tasks", icon: GoTasklist, text: "Task Create" },
+    { to: "/tasksmanagement", icon: GoTasklist, text: "Task Management" },
     { to: `/chats/${employeeID}`, icon: GoTasklist, text: "Chats" },
   ];
 

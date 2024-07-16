@@ -12,7 +12,7 @@ const Chats = () => {
   const [employeeData, setEmployeeData] = useState('');
   const [messageInput, setMessageInput] = useState('');
   const [file, setFile] = useState(null);
-  const [modalImage, setModalImage] = useState(null); // State to manage modal image
+  const [modalImage, setModalImage] = useState(null); 
   const chatContainerRef = useRef(null);
 
   // to get current time
@@ -23,7 +23,7 @@ const Chats = () => {
     const ampm = hours >= 12 ? 'PM' : 'AM';
     
     hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
+    hours = hours ? hours : 12; 
   
     const formattedTime = `${hours}:${minutes < 10 ? '0' + minutes : minutes} ${ampm}`;
     return formattedTime;
@@ -104,15 +104,15 @@ const Chats = () => {
 
   // Function to handle clicking on image
   const handleImageClick = (imageUrl) => {
-    setModalImage(imageUrl); // Set modalImage state to the clicked image URL
+    setModalImage(imageUrl); 
   };
 
   // Function to close the modal
   const closeModal = () => {
-    setModalImage(null); // Clear modalImage state to close the modal
+    setModalImage(null); 
   };
 
-  // Function to scroll chat container to bottom
+  
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;

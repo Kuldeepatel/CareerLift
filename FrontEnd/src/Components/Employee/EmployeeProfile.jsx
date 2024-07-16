@@ -103,7 +103,7 @@ const EmployeeProfile = () => {
     <div className="overflow-y-auto">
       <EmployeeSidebar />
       <EmployeeTopbar />
-      <div className="ml-[18%] pt-[60px] flex flex-col w-[100-18%] h-full p-4 bg-white mt-10">
+      <div className="ml-[18%] z-10 pt-[60px] flex flex-col w-[100-18%] h-full p-4 bg-white mt-10">
         <div className="flex flex-col">
           <div className="flex">
             <p className="text-2xl border-l-4 rounded pl-2 h-fit border-[#7E3AF2]">

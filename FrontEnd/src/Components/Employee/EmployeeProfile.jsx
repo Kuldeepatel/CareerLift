@@ -9,6 +9,7 @@ import { MdOutlineIncompleteCircle } from "react-icons/md";
 import axios from 'axios';
 import EmployeeSidebar from './EmployeeSidebar';
 import EmployeeTopbar from './EmployeeTopbar';
+import Rating from './Rating';
 
 // Register necessary components for ChartJS
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -25,7 +26,7 @@ const EmployeeProfile = () => {
         const storedEmployee = localStorage.getItem('employee');
         if (storedEmployee) {
           const parsedEmployee = JSON.parse(storedEmployee);
-          const response = await axios.get(`http://localhost:8000/api/v1/employee/getallemployee/${parsedEmployee.EmployeeID}`);
+          const response = await axios.get(`http://localhost:8000/api/v1/employee/${parsedEmployee.EmployeeID}`);
           setEmployee(response.data);
           const tasksResponse = await axios.get(`http://localhost:8000/api/v1/task/${parsedEmployee.EmployeeID}`);
           setPendingTasks(tasksResponse.data);
@@ -99,14 +100,24 @@ const EmployeeProfile = () => {
       : "bg-red-300 text-red-800"
   } font-bold rounded-xl`;
 
+  const rating = 7;
+  const totalReviews = 1028;
+  const distribution = [
+    { color: '400', percentage: 80 },
+    { color: '400', percentage: 60 },
+    { color: '300', percentage: 40 },
+    { color: '200', percentage: 20 },
+    { color: '100', percentage: 15 },
+  ];
+
   return (
     <div className="overflow-y-auto">
       <EmployeeSidebar />
       <EmployeeTopbar />
-      <div className="ml-[18%] pt-[60px] flex flex-col w-[100-18%] h-full p-4 bg-white mt-10">
+      <div className="ml-[55px] pt-[10px] flex flex-col w-[100-18%] h-full p-4 bg-white mt-2">
         <div className="flex flex-col">
           <div className="flex">
-            <p className="text-2xl border-l-4 rounded pl-2 h-fit border-[#7E3AF2]">
+            <p className="text-2xl border-l-4 rounded pl-2 h-fit border-[#1B67D9]">
               {greeting},
             </p>
             <p className="ml-2 text-2xl">{employee.FirstName}</p>
@@ -116,14 +127,17 @@ const EmployeeProfile = () => {
 
         {/* Cards */}
         <div className="flex mt-4 gap-8 w-full">
-          <div className="flex ml-[20px] shadow-md rounded-xl relative p-4 w-[60%] h-[240px] bg-[#f2f2f2] text-white">
+          <div className="flex ml-[20px] shadow-md rounded-xl  p-4 w-[60%] h-[240px] bg-[#f2f2f2] text-white">
             <div className="flex w-full h-full text-black">
               <img
-                className="h-[180px] w-[180px] items-center justify-between mt-4 flex rounded-full"
+                className="h-[180px] w-[180px] items-center justify-between mt-1 flex rounded-full"
                 src={employee.ProfileImage}
                 alt=""
               />
-              <div className="flex flex-col text-slate-500">
+              <div className="flex p-2 mt-[50px] bg-green-200 px-4 text-green-700 font-bold top-4 right-4 absolute h-fit w-fit rounded-xl">
+                Active
+              </div>
+              <div className="flex flex-col text-slate-500 overflow-hidden">
                 <p className="ml-4 mt-2 text-[22px] font-semibold tracking-widest">
                   {employee.FirstName} {employee.LastName}
                 </p>
@@ -141,23 +155,28 @@ const EmployeeProfile = () => {
                   <FaIdCard /> <p>{employee.EmployeeID}</p>
                 </div>
               </div>
-              <div className="flex p-2 bg-green-200 px-4 text-green-700 font-bold top-4 right-4 absolute h-fit w-fit rounded-xl">
-                Active
-              </div>
             </div>
           </div>
           <div className="flex shadow-md w-[40%] rounded-xl h-[240px] items-center justify-center bg-[#f2f2f2] text-white p-4">
-            <Pie className="ml-6  " data={data} options={options} />
+            <Pie data={data} options={options} />
+          </div>
+          <div className="flex shadow-md w-[40%] rounded-xl h-[240px] items-center justify-center bg-[#f2f2f2]">
+            <div className="">
+              {/* <p className="text-[#1B67D9] text-7xl text-center "> 7th</p>
+              <p className="text-slate-500  text-center mt-4">LeaderBoard Ranking</p> */}
+              <Rating rating={rating} totalReviews={totalReviews} distribution={distribution} />
+                            
+            </div>
           </div>
         </div>
 
         <div className="flex h-[150px] w-full gap-4 mt-8 ml-4 ">
-          <div className="flex hover:shadow-md p-2 bg-blue-300 rounded-xl w-[24%] h-full text-white">
+          <div className="flex hover:shadow-2xl p-2 bg-blue-300 border-2 border-gray-300 rounded-xl w-[23%] h-full text-white hover:opacity-100">
             <div>
               <div className="m-4 h-[30px] w-[30px]  ">
                 <SlGraph className="p-2 h-full w-full bg-black rounded-full  " />
               </div>
-              <p className="ml-4 mt-[-10px]  ">Attendance</p>
+              <p className="ml-4 mt-[-10px]  text-white">Attendance</p>
               <p className="ml-4 mb-2 text-4xl text-slate-800 font-bold ">
                 {attendancePercentage}%
               </p>
@@ -166,7 +185,7 @@ const EmployeeProfile = () => {
               <SlGraph className="text-6xl  " />
             </div>
           </div>
-          <div className="flex p-2 hover:shadow-md bg-pink-300 rounded-xl w-[23%] h-full text-white">
+          <div className="flex p-2 hover:shadow-lg bg-pink-300 rounded-xl w-[23%] h-full text-white">
             <div>
               <div className="m-4 h-[30px] w-[30px] ">
                 <FaTasks className="p-2 h-full w-full bg-black rounded-full  " />
@@ -180,7 +199,7 @@ const EmployeeProfile = () => {
               <FaTasks className="text-6xl  " />
             </div>
           </div>
-          <div className="flex p-2 hover:shadow-md bg-green-300 rounded-xl w-[23%] h-full text-white">
+          <div className="flex p-2 hover:shadow-lg bg-green-300 rounded-xl w-[23%] h-full text-white">
             <div>
               <div className="m-4 h-[30px] w-[30px] ">
                 <MdOutlineIncompleteCircle className="p-2 h-full w-full bg-black rounded-full  " />
@@ -194,7 +213,7 @@ const EmployeeProfile = () => {
               <MdOutlineIncompleteCircle className="text-6xl ml-[-15px] " />
             </div>
           </div>
-          <div className="flex p-2 hover:shadow-md bg-orange-300 rounded-xl w-[24%] h-full text-white">
+          <div className="flex p-2 hover:shadow-lg bg-orange-300 rounded-xl w-[23%] h-full text-white">
             <div>
               <div className="m-4 h-[30px] w-[30px] ">
                 <GiProgression className="p-2 h-full w-full bg-black rounded-full  " />
@@ -211,17 +230,17 @@ const EmployeeProfile = () => {
         </div>
 
         {/* Pending Tasks */}
-        <div className="flex flex-col mt-8">
+        {/* <div className="flex flex-col mt-8">
           <div className="flex">
-            <p className="text-2xl border-l-4 rounded pl-2 h-fit border-[#7E3AF2] mt-4 ml-4">
+            <p className="text-2xl border-l-4 rounded pl-2 h-fit border-[#1B67D9] mt-4 ml-0">
               Pending Tasks
             </p>
           </div>
           <div className="flex bg-[#f2f2f2] hover:shadow-md items-center justify-between h-[80px] rounded-xl  mt-4 mx-4">
-            <p className="pl-5 font-semibold text-[#7E3AF2]">TaskID</p>
-            <p className="font-semibold text-[#7E3AF2]">Title</p>
-            <p className="font-semibold text-[#7E3AF2]">DueDate</p>
-            <p className="font-semibold text-[#7E3AF2] pr-14">Status</p>
+            <p className="pl-5 font-semibold text-[#1B67D9]">TaskID</p>
+            <p className="font-semibold text-[#1B67D9]">Title</p>
+            <p className="font-semibold text-[#1B67D9]">DueDate</p>
+            <p className="font-semibold text-[#1B67D9] pr-14">Status</p>
           </div>
           {pendingTasks.length > 0 ? (
             <div className="flex flex-col w-full top-0">
@@ -237,7 +256,7 @@ const EmployeeProfile = () => {
           ) : (
             <p className="ml-4 mt-2">No pending tasks found.</p>
           )}
-        </div>
+        </div> */}  
       </div>
     </div>
   );

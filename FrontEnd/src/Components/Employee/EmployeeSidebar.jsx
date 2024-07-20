@@ -1,90 +1,105 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import { RiDashboardLine } from "react-icons/ri";
+import { Link, useLocation } from "react-router-dom";
 import { TbLogout } from "react-icons/tb";
+// import { CgChart } from "react-icons/cg";
 import { PiCheckSquareOffset } from "react-icons/pi";
 import { IoPeopleOutline } from "react-icons/io5";
-import { HiOutlineNewspaper } from "react-icons/hi2";
+// import { HiOutlineNewspaper } from "react-icons/hi2";
 import { MdOutlineLeaderboard } from "react-icons/md";
 import { GoTasklist } from "react-icons/go";
-import { GiWeightLiftingUp } from "react-icons/gi";
-import axios from 'axios';
+// import { FaChevronDown } from "react-icons/fa";
+import { FiAlignJustify } from "react-icons/fi";
 
-const EmployeeSidebar = () => {
-  const navigate = useNavigate();
+const Sidebar = () => {
   const location = useLocation();
-  const [employeeID, setEmployeeID] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [profileSubmenu, setProfileSubmenu] = useState(false);
 
-  useEffect(() => {
-    const storedEmployee = localStorage.getItem('employee');
-    if (storedEmployee) {
-      const employeeData = JSON.parse(storedEmployee);
-      setEmployeeID(employeeData.EmployeeID);
-    }
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      const response = await axios.post(`http://localhost:8000/api/v1/employee/logout`, {}, {
-        withCredentials: true // Ensure cookies are included
-      });
-      console.log(response);
-      localStorage.removeItem('employee');
-      navigate('/');
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
+  const handleSidebarToggle = () => {
+    setIsExpanded(!isExpanded);
   };
 
-  const menuItems = [
-    { to: "/employeedashboard", icon: RiDashboardLine, text: "Dashboard" },
-    { to: "/attendance", icon: PiCheckSquareOffset, text: "Attendance" },
-    { to: "/employee", icon: IoPeopleOutline, text: "Employee" },
-    { to: "/leave", icon: HiOutlineNewspaper, text: "Leave Application" },
-    { to: "/promotionranking", icon: MdOutlineLeaderboard, text: "Leaderboard" },
-    { to: "/task", icon: GoTasklist, text: "Task Management" },
-    { to: "/demo", icon: GoTasklist, text: "Demo" },
-    { to: `/chats/${employeeID}`, icon: GoTasklist, text: "Chats" },
-  ];
+  const handleProfileSubmenuToggle = () => {
+    setProfileSubmenu(!profileSubmenu);
+  };
 
   return (
-    <div className="flex w-[18%] h-screen fixed bg-white shadow-lg flex-col p-6 top-0">
-      <div className="flex mb-6">
+    <div className={`flex flex-col h-screen fixed bg-white shadow-lg p-1 z-30 transition-all duration-300 ${isExpanded ? 'w-[18%]' : 'w-[5%]'}`}>
+      <div className="flex mb-6 cursor-pointer" onClick={handleSidebarToggle}>
         <h1 className="text-[20px] text-slate-500 mt-[-10px] font-semibold tracking-normal flex gap-2 items-center">
-          <GiWeightLiftingUp className="text-[30px]" />
-          <p>CareerLIFT</p>
+          <FiAlignJustify className="mt-4 ml-2.5 size-8"/>
+          {/* {isExpanded && <p>CarrerLIFT</p>} */}
         </h1>
       </div>
 
-      {menuItems.map((item, index) => (
-        <Link
-          key={index}
-          to={item.to}
-          className={`flex p-3 rounded gap-4 mb-1 items-center hover:bg-[#7E3AF2] hover:text-white transition ease-in-out delay-75 ${
-            location.pathname === item.to ? "bg-[#7E3AF2] text-white" : ""
-          }`}
-        >
-          <item.icon
-            className={`text-xl ${
-              location.pathname === item.to ? "text-white" : ""
-            }`}
-          />
-          <p
-            className={`text-1xl tracking-wider ${
-              location.pathname === item.to ? "text-white" : ""
-            }`}
-          >
-            {item.text}
-          </p>
-        </Link>
-      ))}
+      <Link to="/employeedashboard" className={`flex p-3 rounded gap-4 mb-1 items-center hover:bg-[#1B67D9] hover:text-white transition ease-in-out delay-75 ${location.pathname === "/employeedashboard" ? "bg-[#1B67D9] text-white" : ""}`}>
+        <RiDashboardLine className={`text-xl size-6 opacity-70 ${location.pathname === "/employeedashboard" ? "text-white opacity-100" : ""}`} />
+        {isExpanded && <p className={`text-1xl tracking-wider ${location.pathname === "/employeedashboard" ? "text-white" : ""}`}>Dashboard</p>}
+      </Link>
 
-      <div className="flex p-3 rounded items-center absolute bottom-3 w-[85%] cursor-pointer gap-4 mb-1 bg-[#7E3AF2] text-white transition ease-in-out delay-75">
-        <TbLogout className="text-xl bg-[#7E3AF2]" />
-        <p className="text-1xl tracking-widest" onClick={handleLogout}>Log out</p>
+      <Link to="/attendance" className={`flex p-3 rounded gap-4 mb-1 items-center hover:bg-[#1B67D9] hover:text-white transition ease-in-out delay-75 ${location.pathname === "/attendance" ? "bg-[#1B67D9] text-white" : ""}`}>
+        <PiCheckSquareOffset className={`text-xl size-6 ${location.pathname === "/attendance" ? "text-white" : ""}`} />
+        {isExpanded && <p className={`text-1xl tracking-wider ${location.pathname === "/attendance" ? "text-white" : ""}`}>Attendance</p>}
+      </Link>
+
+      <Link to="/employee" className={`flex p-3 rounded gap-4 mb-1 items-center hover:bg-[#1B67D9] hover:text-white transition ease-in-out delay-75 ${location.pathname === "/employee" ? "bg-[#1B67D9] text-white" : ""}`}>
+        <IoPeopleOutline className={`text-xl size-6 ${location.pathname === "/employee" ? "text-white" : ""}`} />
+        {isExpanded && <p className={`text-1xl tracking-wider ${location.pathname === "/employee" ? "text-white" : ""}`}>EmployeeList</p>}
+      </Link>
+
+      {/* <Link to="/leave" className={`flex p-3 rounded gap-4 mb-1 items-center hover:bg-[#1B67D9] hover:text-white transition ease-in-out delay-75 ${location.pathname === "/leave" ? "bg-[#1B67D9] text-white" : ""}`}>
+        <HiOutlineNewspaper className={`text-xl size-6 ${location.pathname === "/leave" ? "text-white" : ""}`} />
+        {isExpanded && <p className={`text-1xl tracking-wider ${location.pathname === "/leave" ? "text-white" : ""}`}>Leave Application</p>}
+      </Link> */}
+
+      <Link to="/promotionranking" className={`flex p-3 rounded gap-4 mb-1 items-center hover:bg-[#1B67D9] hover:text-white transition ease-in-out delay-75 ${location.pathname === "/promotionranking" ? "bg-[#1B67D9] text-white" : ""}`}>
+        <MdOutlineLeaderboard className={`text-xl size-6 opacity-70 ${location.pathname === "/promotionranking" ? "text-white opacity-100" : ""}`} />
+        {isExpanded && <p className={`text-1xl tracking-wider ${location.pathname === "/promotionranking" ? "text-white" : ""}`}>Leaderboard</p>}
+      </Link>
+
+      <Link to="/task" className={`flex p-3 rounded gap-4 mb-1 items-center hover:bg-[#1B67D9] hover:text-white transition ease-in-out delay-75 ${location.pathname === "/task" ? "bg-[#1B67D9] text-white" : ""}`}>
+        <GoTasklist className={`text-xl size-6 ${location.pathname === "/task" ? "text-white" : ""}`} />
+        {isExpanded && <p className={`text-1xl tracking-wider ${location.pathname === "/task" ? "text-white" : ""}`}>Task Management</p>}
+      </Link>
+
+      {/* <Link to="/chats/:employeeID" className={`flex p-3 rounded gap-4 mb-1 items-center hover:bg-[#1B67D9] hover:text-white transition ease-in-out delay-75 ${location.pathname === "/chats/:employeeID" ? "bg-[#1B67D9] text-white" : ""}`}>
+        <GoTasklist className={`text-xl size-6 ${location.pathname === "/chats/:employeeID" ? "text-white" : ""}`} />
+        {isExpanded && <p className={`text-1xl tracking-wider ${location.pathname === "/chats/:employeeID" ? "text-white" : ""}`}>Chats</p>}
+      </Link> */}
+
+      {/* Employee Profile with Submenu */}
+      {/* <div className={`flex flex-col p-3 rounded gap-4 mb-1 cursor-pointer hover:bg-[#1B67D9] hover:text-white transition ease-in-out delay-75 ${location.pathname.startsWith("/profile") ? "bg-[#1B67D9] text-white" : ""}`} onClick={handleProfileSubmenuToggle}>
+        <IoPeopleOutline className={`text-xl size-6 ${location.pathname.startsWith("/profile") ? "text-white" : ""}`} />
+        {isExpanded && (
+          <>
+            <div className="flex justify-between w-full items-center">
+              <p className={`text-1xl tracking-wider ${location.pathname.startsWith("/profile") ? "text-white" : ""}`}>Profile</p>
+              <FaChevronDown className={`transition-transform size-4 ${profileSubmenu ? "rotate-180" : ""}`} />
+            </div>
+            {profileSubmenu && (
+              <div className="ml-8 mt-2 flex flex-col gap-2">
+                <Link to="/profile/passwords" className={`flex p-2 rounded gap-4 items-center hover:bg-[#1B67D9] hover:text-white ${location.pathname === "/profile/passwords" ? "bg-[#1B67D9] text-white" : ""}`}>
+                  <p className="text-sm">Passwords</p>
+                </Link>
+                <Link to="/profile/mail" className={`flex p-2 rounded gap-4 items-center hover:bg-[#1B67D9] hover:text-white ${location.pathname === "/profile/mail" ? "bg-[#1B67D9] text-white" : ""}`}>
+                  <p className="text-sm">Mail</p>
+                </Link>
+                <Link to="/profile/accounts" className={`flex p-2 rounded gap-4 items-center hover:bg-[#1B67D9] hover:text-white ${location.pathname === "/profile/accounts" ? "bg-[#1B67D9] text-white" : ""}`}>
+                  <p className="text-sm">Accounts</p>
+                </Link>
+              </div>
+            )}
+          </>
+        )}
+      </div> */}
+
+      <div className="flex p-3 rounded items-center absolute bottom-3 w-[85%] cursor-pointer gap-4 mb-1 bg-[#1B67D9] text-white transition ease-in-out delay-75">
+        <TbLogout className="text-xl bg-[#1B67D9]" />
+        {isExpanded && <p className="text-1xl tracking-widest">Log out</p>}
       </div>
     </div>
   );
 };
 
-export default EmployeeSidebar;
+export default Sidebar;

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Lottie from 'lottie-react';
 import loginanimation from '../assets/loginanimation.json';
 import backgroundImage from '../assets/background.png';
+import { GiProgression } from 'react-icons/gi';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -47,12 +48,18 @@ const LoginPage = () => {
         className="w-[60vw] h-screen relative overflow-hidden bg-cover bg-center"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
-        <h1 className="text-[#f0eeeef4] ml-4 mt-4 font-bold text-xl">CareerLift</h1>
+        <h1 className="text-[30px] text-white ml-[10px] mt-[10px] font-semibold tracking-normal flex gap-2 items-center">
+          <GiProgression className="text-[30px]" />
+          <p>CareerLIFT</p>
+        </h1>
         <div className="absolute top-1/2 left-[30%] transform -translate-x-1/2 -translate-y-1/2">
           <Lottie animationData={loginanimation} />
         </div>
       </div>
       <div className="absolute md:top-[35%] md:right-[18%]">
+      <h1 className="text-[30px] text-black font-semibold tracking-normal mb-2 flex gap-2 items-center">
+          <p>Sign In</p>
+        </h1>
         <form className="flex flex-col items-center" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -68,7 +75,7 @@ const LoginPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit" className="mb-4 p-2 w-[200px] bg-[#1B67D9] text-white rounded-lg">
+          <button type="submit" className="mb-4 p-2 w-[200px] bg-[#1B67D9] text-white rounded-lg hover:opacity-80">
             Login
           </button>
           {error && <p className="text-red-500">{error}</p>}

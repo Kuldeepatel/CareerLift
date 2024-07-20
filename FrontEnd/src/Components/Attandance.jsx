@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import EmployeeSidebar from './Employee/EmployeeSidebar';
+import EmployeeTopbar from './Employee/EmployeeTopbar';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -85,11 +87,15 @@ const Attendance = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-10 ">
-      <h1 className="text-4xl border-l-[#7E3AF2] border-l-4 rounded h-fit pl-4 text-slate-700 mb-5">
-        Attendance
-      </h1>
-      <div className="flex justify-end mt-6 mb-10">
+    <>
+    <div className='overflow-hidden'></div>
+    <EmployeeSidebar />
+    <EmployeeTopbar />
+    <div className="ml-[5%] flex flex-col w-[95%] mt-[10px] p-4 bg-white">
+        <h1 className="text-4xl border-l-[#1B67D9] border-l-4 rounded h-fit pl-4 text-slate-700">
+          Attendance
+        </h1>
+      <div className="flex justify-end mb-2">
         <input
           type="date"
           id="attendance-date"
@@ -98,18 +104,19 @@ const Attendance = () => {
           className="p-2 border border-gray-300 rounded-lg text-base focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         />
       </div>
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-3">
         <div className="text-lg hover:shadow-md text-green-700 p-2 px-4 bg-green-300 rounded">
           Present: {presentCount}
+          {/* shadow-md - option in place of hover*/}
         </div>
         <div className="text-lg hover:shadow-md text-red-700 p-2 bg-red-300 px-4 rounded">
           Absent: {absentCount}
         </div>
       </div>
 
-      <div className="grid gap-6">
+      <div className="grid gap-3">
         {currentEmployees.map(employee => (
-          <div key={employee.EmployeeID} className="mb-0 flex items-center p-4 bg-white shadow-md rounded-lg border border-gray-200 hover:shadow-xl transition duration-300 ease-in-out">
+          <div key={employee.EmployeeID} className="flex items-center p-2 bg-white shadow-md rounded-lg border border-gray-200 hover:shadow-xl transition duration-300 ease-in-out">
             <img src={employee.ProfileImage} alt={`${employee.FirstName} ${employee.LastName}'s profile`} className="w-12 h-12 rounded-full mr-4 border border-gray-300"/>
             <div className="flex-1">
               <p className="text-lg font-semibold text-gray-800">{employee.FirstName} {employee.LastName}</p>
@@ -119,7 +126,7 @@ const Attendance = () => {
               <input
                 type="checkbox"
                 id={`attendance-${employee.EmployeeID}`}
-                className="form-checkbox h-5 w-5 text-blue-600"
+                className="form-checkbox h-5 w-10 text-blue-600"
                 checked={attendanceData[employee.EmployeeID] === 'present'}
                 onChange={(e) => handleAttendanceChange(employee.EmployeeID, e.target.checked ? 'present' : 'absent')}
               />
@@ -129,7 +136,7 @@ const Attendance = () => {
       </div>
 
       {/* Pagination controls */}
-      <div className="mt-4 flex justify-center">
+      <div className="mt-3 flex justify-center">
         {employees.length > employeesPerPage && (
           <ul className="flex list-none">
             {Array.from({ length: Math.ceil(employees.length / employeesPerPage) }, (_, index) => (
@@ -141,12 +148,13 @@ const Attendance = () => {
         )}
       </div>
 
-      <button onClick={markAttendance} className="p-2 hover:shadow-md text-white bg-[#7E3AF2] rounded px-4 mt-6">
+      <button onClick={markAttendance} className="p-2 hover:shadow-md text-white bg-[#1B67D9] rounded px-2 mt-2">
         Submit Attendance
       </button>
 
       <ToastContainer />
     </div>
+    </>
   );
 }
 

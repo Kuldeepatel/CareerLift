@@ -28,6 +28,9 @@ const ChatsSchema = new mongoose.Schema({
   Time : {
     type :String,
     required : true
+  },
+  file : {
+    type : String
   }
 });
 

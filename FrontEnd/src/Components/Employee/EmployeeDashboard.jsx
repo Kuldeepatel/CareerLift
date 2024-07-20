@@ -1,14 +1,14 @@
 import React from 'react'
-import EmployeeSidebar from './EmployeeSidebar'
-import EmployeeTopbar from './EmployeeTopbar'
+// import EmployeeSidebar from './EmployeeSidebar'
+// import EmployeeTopbar from './EmployeeTopbar'
 import EmployeeProfile from './EmployeeProfile'
 
 const EmployeeDashboard = () => {
   return (
     <>
     <div className='ml-[0px]'>
-    <EmployeeTopbar/>
-    <EmployeeSidebar/>
+    {/* <EmployeeTopbar/> */}
+    {/* <EmployeeSidebar/> */}
     <EmployeeProfile/>
     </div>
     </>

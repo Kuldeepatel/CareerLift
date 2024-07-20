@@ -1,5 +1,5 @@
 const Chats = require('../Models/Chats.Models');
-
+const {uploadOnCloudinary} = require('../utils/cloudinary');
 // to get All Employee Chats
 const getAllChats = async(req,res) =>{
 
@@ -11,29 +11,41 @@ const getAllChats = async(req,res) =>{
     }
 }
 
-const CreateChats = async(req,res) =>{
-
+const CreateChats = async (req, res) => {
     try {
-        const {employeeID} = req.params;
-        const { FirstName, LastName, ProfileImage, message, date, Time } = req.body;
+      const { employeeID } = req.params;
+      const { FirstName, LastName, ProfileImage, message, date, Time } = req.body;
+  
+      // Handle file upload if exists
+      let fileUrl = null;
+    if (req.file) {
+      const fileLocalPath = req.file.path;
+      fileUrl = await uploadOnCloudinary(fileLocalPath); 
+    }
 
-        const newChat = new Chats({
+  
+      // Save chat data including Cloudinary URL if file was uploaded
+      const newChat = new Chats({
         EmployeeID: employeeID,
         FirstName,
         LastName,
         ProfileImage,
-        message,
+        message ,
         date,
-        Time
-        });
-        console.log(newChat)
-        const AllChats = await newChat.save(); 
-
-        res.status(201).json(AllChats);
+        Time,
+        file: fileUrl?.url 
+      });
+  
+      const AllChats = await newChat.save();
+  
+      res.status(201).json(AllChats);
     } catch (error) {
-        res.status(400).json("Error During save chats")
+      res.status(400).json("Error During save chats");
     }
-}
+  };
+  
+  module.exports = CreateChats;
+  
 
 module.exports = {
     getAllChats,

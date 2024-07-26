@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const TaskSchema = new Schema({
-
     taskID: {
         type: Number,
         required: true,
@@ -15,7 +14,7 @@ const TaskSchema = new Schema({
     },
     description: { 
         type: String  
-    },
+    }, 
     status: { 
         type: String, 
         enum: ['pending', 'due task', 'completed'], 
@@ -34,11 +33,10 @@ const TaskSchema = new Schema({
     completionDate: { 
         type: String 
     },
-    assignedTo: [{  
+    assignedTo: {  
         type: Number,
-        unique: true,
         trim: true 
-    }] 
+    }
 });
 
 const Task = mongoose.model('Task', TaskSchema);

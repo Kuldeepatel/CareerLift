@@ -10,6 +10,7 @@ import axios from 'axios';
 import EmployeeSidebar from './EmployeeSidebar';
 import EmployeeTopbar from './EmployeeTopbar';
 import Rating from './Rating';
+import CountUp from "react-countup";
 
 // Register necessary components for ChartJS
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -28,8 +29,10 @@ const EmployeeProfile = () => {
           const parsedEmployee = JSON.parse(storedEmployee);
           const response = await axios.get(`http://localhost:8000/api/v1/employee/${parsedEmployee.EmployeeID}`);
           setEmployee(response.data);
+          console.log(response.data)
           const tasksResponse = await axios.get(`http://localhost:8000/api/v1/task/${parsedEmployee.EmployeeID}`);
           setPendingTasks(tasksResponse.data);
+          console.log(tasksResponse.data)
         }
       } catch (error) {
         console.error("Error during fetching Employee Data", error);
@@ -72,7 +75,7 @@ const EmployeeProfile = () => {
           (100 - attendancePercentage).toFixed(2)
         ],
         backgroundColor: ["#36A2EB", "#FF6384"],
-        hoverBackgroundColor: ["#36A2EB", "#FF6384"],
+        hoverBackgroundColor: ["#2e92d4", "#f75679"],
       },
     ],
   };
@@ -100,166 +103,137 @@ const EmployeeProfile = () => {
       : "bg-red-300 text-red-800"
   } font-bold rounded-xl`;
 
-  const rating = 7;
-  const totalReviews = 1028;
-  const distribution = [
-    { color: '400', percentage: 80 },
-    { color: '400', percentage: 60 },
-    { color: '300', percentage: 40 },
-    { color: '200', percentage: 20 },
-    { color: '100', percentage: 15 },
-  ];
 
   return (
     <div className="overflow-y-auto">
       <EmployeeSidebar />
       <EmployeeTopbar />
-      <div className="ml-[55px] pt-[10px] flex flex-col w-[100-18%] h-full p-4 bg-white mt-2">
-        <div className="flex flex-col">
-          <div className="flex">
-            <p className="text-2xl border-l-4 rounded pl-2 h-fit border-[#1B67D9]">
-              {greeting},
-            </p>
-            <p className="ml-2 text-2xl">{employee.FirstName}</p>
-          </div>
-          <p className="ml-4 mt-[3px]">Let's see how you are doing...</p>
-        </div>
+      <div className="ml-[55px] pt-[10px] flex flex-col w-[100-18%]  h-full p-4">
 
-        {/* Cards */}
-        <div className="flex mt-4 gap-8 w-full">
-          <div className="flex ml-[20px] shadow-md rounded-xl  p-4 w-[60%] h-[240px] bg-[#f2f2f2] text-white">
-            <div className="flex w-full h-full text-black">
-              <img
-                className="h-[180px] w-[180px] items-center justify-between mt-1 flex rounded-full"
-                src={employee.ProfileImage}
+      <div className="flex flex-col h-fit">
+        <div className="flex flex-col bg-white m-3 rounded-lg">
+          <div className="flex justify-between items-center mb-4">
+            <h1 className="text-3xl font-bold">Dashboard</h1>
+            {/* <div className="text-lg">ROMIN</div> */}
+          </div>
+          <div className="flex items-center ml-10 mb-6">
+            <div className="mr-2">
+            <img
+                className="h-[280px] w-[380px] items-center justify-between mt-1 flex rounded-full"
+                // src={employee.ProfileImage}
+                src="https://cdni.iconscout.com/illustration/premium/thumb/employee-performance-evaluation-5682463-4734461.png?f=webp"
+                // src="https://www.shutterstock.com/image-vector/monitor-dashboard-male-character-giant-260nw-2037523238.jpg"
+                // src="https://img.freepik.com/premium-vector/global-economic-concept-with-people-scene-flat-design-woman-analyzing-financial-data-creates-strategy-investing-business-startups-vector-illustration-with-character-situation-web_9209-10097.jpg?size=626&ext=jpg&ga=GA1.1.121323546.1721742267&semt=ais_user"
                 alt=""
               />
-              <div className="flex p-2 mt-[50px] bg-green-200 px-4 text-green-700 font-bold top-4 right-4 absolute h-fit w-fit rounded-xl">
-                Active
-              </div>
-              <div className="flex flex-col text-slate-500 overflow-hidden">
-                <p className="ml-4 mt-2 text-[22px] font-semibold tracking-widest">
-                  {employee.FirstName} {employee.LastName}
+            </div>
+            <div className="ml-[150px]">
+              <h2 className="text-6xl font-semibold mb-2 ">{greeting}, {employee.FirstName}</h2>
+              <div className="flex gap-2 ml-4 items-center text-2xl text-gray-500">
+                    <FaIdCard /> <p>{employee.Position}</p>
+                  </div>
+            </div>
+          </div>
+          <div className="flex justify-between w-full">
+            {/* stat1 */}
+            <div className="flex flex-col items-center">
+                <span className="text-4xl font-bold"><CountUp start={0} end={9000} duration={4} /><span className="text-orange-500">+</span></span>
+                <span className="text-gray-700">Premium Product</span>
+            </div>
+            {/* stat2 */}
+            <div className="flex flex-col items-center">
+                <span className="text-4xl font-bold"><CountUp start={0} end={2000} duration={4} /><span className="text-orange-500">+</span></span>
+                <span className="text-gray-700">Happy Customers</span>
+            </div>
+            {/* stat3 */}
+            <div className="flex flex-col items-center">
+                <span className="text-4xl font-bold"><CountUp start={0} end={28} duration={4} /><span className="text-orange-500">+</span></span>
+                <span className="text-gray-700">Awards Winning</span>
+            </div>
+            <div className="flex flex-col items-center">
+                <span className="text-4xl font-bold"><CountUp start={0} end={28} duration={4} /><span className="text-orange-500">+</span></span>
+                <span className="text-gray-700">Awards Winning</span>
+            </div>
+        </div>
+          
+        </div>
+      </div>
+          
+
+          <div className="flex h-[150px] w-full gap-4 mt-8 ml-4 ">
+            <div className="flex hover:shadow-2xl p-2 bg-blue-300 border-2 border-gray-300 rounded-xl w-[23%] h-full text-white hover:opacity-100">
+              <div>
+                <div className="m-4 h-[30px] w-[30px]  ">
+                  <SlGraph className="p-2 h-full w-full bg-black rounded-full  " />
+                </div>
+                <p className="ml-4 mt-[-10px]  text-white">Attendance</p>
+                <p className="ml-4 mb-2 text-4xl text-slate-800 font-bold ">
+                  {attendancePercentage}%
                 </p>
-                <p className="ml-4 text-[16px] mt-[-5px]">{employee.Position}</p>
-                <div className="flex gap-2 ml-4 mt-8 items-center">
-                  <FaPhoneAlt /> <p>+91 {employee.PhoneNo}</p>
+              </div>
+              <div className="flex justify-center ml-16 items-center">
+                <SlGraph className="text-6xl  " />
+              </div>
+            </div>
+            <div className="flex p-2 hover:shadow-lg bg-pink-300 rounded-xl w-[23%] h-full text-white">
+              <div>
+                <div className="m-4 h-[30px] w-[30px] ">
+                  <FaTasks className="p-2 h-full w-full bg-black rounded-full  " />
                 </div>
-                <div className="flex gap-2 ml-4 items-center">
-                  <IoLocation /> <p>{employee.Address}</p>
+                <p className="ml-4 mt-[-10px]  ">Total Task</p>
+                <p className="ml-4 mb-2 text-4xl text-slate-800 font-bold ">
+                  {employee.ProjectsCompleted + employee.ProjectsDue}
+                </p>
+              </div>
+              <div className="flex  justify-center ml-16 items-center">
+                <FaTasks className="text-6xl  " />
+              </div>
+            </div>
+            <div className="flex p-2 hover:shadow-lg bg-green-300 rounded-xl w-[23%] h-full text-white">
+              <div>
+                <div className="m-4 h-[30px] w-[30px] ">
+                  <MdOutlineIncompleteCircle className="p-2 h-full w-full bg-black rounded-full  " />
                 </div>
-                <div className="flex gap-2 ml-4 items-center">
-                  <GiShieldOpposition /> <p>{employee.Department}</p>
+                <p className="ml-4 mt-[-10px]  ">Complete Task</p>
+                <p className="ml-4 mb-2 text-4xl text-slate-800 font-bold ">
+                  {employee.ProjectsCompleted}
+                </p>
+              </div>
+              <div className="flex justify-center ml-16 items-center">
+                <MdOutlineIncompleteCircle className="text-6xl ml-[-15px] " />
+              </div>
+            </div>
+            <div className="flex p-2 hover:shadow-lg bg-orange-300 rounded-xl w-[23%] h-full text-white">
+              <div>
+                <div className="m-4 h-[30px] w-[30px] ">
+                  <GiProgression className="p-2 h-full w-full bg-black rounded-full  " />
                 </div>
-                <div className="flex gap-2 ml-4 items-center">
-                  <FaIdCard /> <p>{employee.EmployeeID}</p>
-                </div>
+                <p className="ml-4 mt-[-10px]  ">Due Task</p>
+                <p className="ml-4 mb-2 text-4xl text-slate-800 font-bold ">
+                  {employee.ProjectsDue}
+                </p>
+              </div>
+              <div className="flex justify-center ml-16 items-center">
+                <GiProgression className="text-6xl ml-[-15px] " />
               </div>
             </div>
           </div>
-          <div className="flex shadow-md w-[40%] rounded-xl h-[240px] items-center justify-center bg-[#f2f2f2] text-white p-4">
-            <Pie data={data} options={options} />
-          </div>
-          <div className="flex shadow-md w-[40%] rounded-xl h-[240px] items-center justify-center bg-[#f2f2f2]">
-            <div className="">
-              {/* <p className="text-[#1B67D9] text-7xl text-center "> 7th</p>
-              <p className="text-slate-500  text-center mt-4">LeaderBoard Ranking</p> */}
-              <Rating rating={rating} totalReviews={totalReviews} distribution={distribution} />
-                            
-            </div>
-          </div>
-        </div>
 
-        <div className="flex h-[150px] w-full gap-4 mt-8 ml-4 ">
-          <div className="flex hover:shadow-2xl p-2 bg-blue-300 border-2 border-gray-300 rounded-xl w-[23%] h-full text-white hover:opacity-100">
-            <div>
-              <div className="m-4 h-[30px] w-[30px]  ">
-                <SlGraph className="p-2 h-full w-full bg-black rounded-full  " />
-              </div>
-              <p className="ml-4 mt-[-10px]  text-white">Attendance</p>
-              <p className="ml-4 mb-2 text-4xl text-slate-800 font-bold ">
-                {attendancePercentage}%
-              </p>
-            </div>
-            <div className="flex justify-center ml-16 items-center">
-              <SlGraph className="text-6xl  " />
-            </div>
-          </div>
-          <div className="flex p-2 hover:shadow-lg bg-pink-300 rounded-xl w-[23%] h-full text-white">
-            <div>
-              <div className="m-4 h-[30px] w-[30px] ">
-                <FaTasks className="p-2 h-full w-full bg-black rounded-full  " />
-              </div>
-              <p className="ml-4 mt-[-10px]  ">Total Task</p>
-              <p className="ml-4 mb-2 text-4xl text-slate-800 font-bold ">
-                {employee.Tasks_completed + employee.Due_tasks}
-              </p>
-            </div>
-            <div className="flex  justify-center ml-16 items-center">
-              <FaTasks className="text-6xl  " />
-            </div>
-          </div>
-          <div className="flex p-2 hover:shadow-lg bg-green-300 rounded-xl w-[23%] h-full text-white">
-            <div>
-              <div className="m-4 h-[30px] w-[30px] ">
-                <MdOutlineIncompleteCircle className="p-2 h-full w-full bg-black rounded-full  " />
-              </div>
-              <p className="ml-4 mt-[-10px]  ">Complete Task</p>
-              <p className="ml-4 mb-2 text-4xl text-slate-800 font-bold ">
-                {employee.Tasks_completed}
-              </p>
-            </div>
-            <div className="flex justify-center ml-16 items-center">
-              <MdOutlineIncompleteCircle className="text-6xl ml-[-15px] " />
-            </div>
-          </div>
-          <div className="flex p-2 hover:shadow-lg bg-orange-300 rounded-xl w-[23%] h-full text-white">
-            <div>
-              <div className="m-4 h-[30px] w-[30px] ">
-                <GiProgression className="p-2 h-full w-full bg-black rounded-full  " />
-              </div>
-              <p className="ml-4 mt-[-10px]  ">Due Task</p>
-              <p className="ml-4 mb-2 text-4xl text-slate-800 font-bold ">
-                {employee.Due_tasks}
-              </p>
-            </div>
-            <div className="flex justify-center ml-16 items-center">
-              <GiProgression className="text-6xl ml-[-15px] " />
-            </div>
-          </div>
-        </div>
-
-        {/* Pending Tasks */}
-        {/* <div className="flex flex-col mt-8">
           <div className="flex">
             <p className="text-2xl border-l-4 rounded pl-2 h-fit border-[#1B67D9] mt-4 ml-0">
-              Pending Tasks
+              Attendance
             </p>
           </div>
-          <div className="flex bg-[#f2f2f2] hover:shadow-md items-center justify-between h-[80px] rounded-xl  mt-4 mx-4">
-            <p className="pl-5 font-semibold text-[#1B67D9]">TaskID</p>
-            <p className="font-semibold text-[#1B67D9]">Title</p>
-            <p className="font-semibold text-[#1B67D9]">DueDate</p>
-            <p className="font-semibold text-[#1B67D9] pr-14">Status</p>
+          <div className="flex w-[50%] rounded-xl h-[400px] items-center justify-center text-white p-4">
+          
+            <Pie data={data} options={options} />
           </div>
-          {pendingTasks.length > 0 ? (
-            <div className="flex flex-col w-full top-0">
-              {pendingTasks.map((task, index) => (
-                <div key={index} className="flex bg-[#f2f2f2] hover:shadow-md items-center justify-between h-[80px] rounded-xl mt-4 mx-4">
-                  <p className="pl-10">{task.taskID}</p>
-                  <p>{task.title}</p>
-                  <p>{task.dueDate}</p>
-                  <p className={classNames}>{task.status}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="ml-4 mt-2">No pending tasks found.</p>
-          )}
-        </div> */}  
       </div>
     </div>
   );
 };
 
 export default EmployeeProfile;
+
+
+

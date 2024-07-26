@@ -26,6 +26,9 @@ const signup = async (req, res) => {
     PhoneNo, Position, DOB, DateOfJoining, Address, Qualifications, Skills, Awards, Experience
   } = req.body;
 
+  // console.log(FirstName, MiddleName, LastName, EmployeeID, Password, Email, Salary, Department, Age, Gender,
+  //   PhoneNo, Position, DOB, DateOfJoining, Address, Qualifications, Skills, Awards, Experience)
+
   // Check if all required fields are provided
   if ([FirstName, LastName, EmployeeID, Password, Email, Salary, Department, Age,
     PhoneNo, Position, DateOfJoining, Qualifications].some((field) => !field)) {
@@ -64,7 +67,7 @@ const signup = async (req, res) => {
       employee.Skills = Skills;
       employee.Awards = Awards;
       employee.Experience = Experience;
-      employee.ProfileImage = profileImageUrl?.url;
+      employee.profileImage = profileImageUrl?.url;
 
       await employee.save();
 
@@ -217,12 +220,15 @@ const markAttendance = async (req, res) => {
       const totalAttendance = await Attendance.find({ EmployeeId: entry.EmployeeId });
       const presentCount = totalAttendance.filter(record => record.Attendance === 'present').length;
       const AbsentCount = totalAttendance.length - presentCount;
+      const AttendancePercentage = ((presentCount)/(presentCount + AbsentCount)*100).toFixed(2);
+      
+      
       
 
 
       await Employee.updateOne(
         { EmployeeID: entry.EmployeeId },
-        { $set: { Present: presentCount, Absent : AbsentCount} }
+        { $set: { Present: presentCount, Absent : AbsentCount ,Attendance : AttendancePercentage,AttendancePercentage :AttendancePercentage } }
       );
     }
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { RiDashboardLine } from "react-icons/ri";
 import { Link, useLocation } from "react-router-dom";
 import { TbLogout } from "react-icons/tb";
+import { SlCalender } from "react-icons/sl";
 // import { CgChart } from "react-icons/cg";
 import { PiCheckSquareOffset } from "react-icons/pi";
 import { IoPeopleOutline } from "react-icons/io5";
@@ -34,7 +35,7 @@ const Sidebar = () => {
       </div>
 
       <Link to="/employeedashboard" className={`flex p-3 rounded gap-4 mb-1 items-center hover:bg-[#1B67D9] hover:text-white transition ease-in-out delay-75 ${location.pathname === "/employeedashboard" ? "bg-[#1B67D9] text-white" : ""}`}>
-        <RiDashboardLine className={`text-xl size-6 opacity-70 ${location.pathname === "/employeedashboard" ? "text-white opacity-100" : ""}`} />
+        <RiDashboardLine className={`text-xl size-6  ${location.pathname === "/employeedashboard" ? "text-white opacity-100" : ""}`} />
         {isExpanded && <p className={`text-1xl tracking-wider ${location.pathname === "/employeedashboard" ? "text-white" : ""}`}>Dashboard</p>}
       </Link>
 
@@ -48,13 +49,23 @@ const Sidebar = () => {
         {isExpanded && <p className={`text-1xl tracking-wider ${location.pathname === "/employee" ? "text-white" : ""}`}>EmployeeList</p>}
       </Link>
 
+      <Link to="/calender" className={`flex p-3 rounded gap-4 mb-1 items-center hover:bg-[#1B67D9] hover:text-white transition ease-in-out delay-75 ${location.pathname === "/calender" ? "bg-[#1B67D9] text-white" : ""}`}>
+        <SlCalender className={`text-xl size-6 ${location.pathname === "/calener" ? "text-white" : ""}`} />
+        {isExpanded && <p className={`text-1xl tracking-wider ${location.pathname === "/calender" ? "text-white" : ""}`}>Calender</p>}
+      </Link>
+
+      <Link to="/employeecalender" className={`flex p-3 rounded gap-4 mb-1 items-center hover:bg-[#1B67D9] hover:text-white transition ease-in-out delay-75 ${location.pathname === "/employeecalender" ? "bg-[#1B67D9] text-white" : ""}`}>
+        <SlCalender className={`text-xl size-6 ${location.pathname === "/employeecalener" ? "text-white" : ""}`} />
+        {isExpanded && <p className={`text-1xl tracking-wider ${location.pathname === "/employeecalender" ? "text-white" : ""}`}>EmployeeCalender</p>}
+      </Link>
+
       {/* <Link to="/leave" className={`flex p-3 rounded gap-4 mb-1 items-center hover:bg-[#1B67D9] hover:text-white transition ease-in-out delay-75 ${location.pathname === "/leave" ? "bg-[#1B67D9] text-white" : ""}`}>
         <HiOutlineNewspaper className={`text-xl size-6 ${location.pathname === "/leave" ? "text-white" : ""}`} />
         {isExpanded && <p className={`text-1xl tracking-wider ${location.pathname === "/leave" ? "text-white" : ""}`}>Leave Application</p>}
       </Link> */}
 
       <Link to="/promotionranking" className={`flex p-3 rounded gap-4 mb-1 items-center hover:bg-[#1B67D9] hover:text-white transition ease-in-out delay-75 ${location.pathname === "/promotionranking" ? "bg-[#1B67D9] text-white" : ""}`}>
-        <MdOutlineLeaderboard className={`text-xl size-6 opacity-70 ${location.pathname === "/promotionranking" ? "text-white opacity-100" : ""}`} />
+        <MdOutlineLeaderboard className={`text-xl size-6  ${location.pathname === "/promotionranking" ? "text-white opacity-100" : ""}`} />
         {isExpanded && <p className={`text-1xl tracking-wider ${location.pathname === "/promotionranking" ? "text-white" : ""}`}>Leaderboard</p>}
       </Link>
 

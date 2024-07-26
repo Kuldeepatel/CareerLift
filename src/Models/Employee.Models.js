@@ -65,11 +65,11 @@ const EmployeeSchema = new Schema(
       trim: true,
     },
     DOB: {
-      type: Date,
+      type: String,
       trim: true,
     },
     DateOfJoining: {
-      type: Date,
+      type: String,
       trim: true,
     },
     Address: {
@@ -85,7 +85,7 @@ const EmployeeSchema = new Schema(
       type: String,
       trim: true,
     },
-    ProfileImage: {
+    profileImage: {
       type: String,
     },
     Tasks_completed: {
@@ -119,6 +119,48 @@ const EmployeeSchema = new Schema(
       type: Number,
       default: 0,
     }
+    ,
+  PerformanceScore: {
+      type: Number,
+      default: 0
+  },
+  ProjectsCompleted: {
+      type: Number,
+      default: 0
+  
+  },
+  ProjectsDue: {
+      type: Number,
+      default: 0
+    
+  },
+  TechnicalSkillsScore: {
+      type: Number,
+      default: 0
+  },
+  SoftSkillsScore: {
+      type: Number,
+      default: 0
+
+  },
+  TrainingProgramsCompleted: {
+      type: Number,
+      default: 0
+      
+  },
+  Attendance: {
+      type: Number,
+      default: 0
+  },
+  YearsWithCompany: {
+      type: Number,
+      default: 0
+  },
+  YearsInIndustry: {
+      type: Number,
+      default: 0
+    
+  }
   },
   {
     timestamps: true,

@@ -54,10 +54,10 @@ const EmployeeTopbar = ({ bgColor = "bg-white" }) => {
   }
 
   return (
-    <div className='ml-0'>
-      <p className='ml-[75px] text-[20px] text-slate-500 mt-[12px] font-semibold tracking-normal flex gap-2 items-center'><GiProgression className="text-[30px]" />Career lift</p>
-      <div className={'flex w-full h-[50px] top-0 z-10 {bgColor} fixed ml-[25%]'}>
-        <div className="flex items-center h-full absolute right-[330px] cursor-pointer" onClick={toggle}>
+    <div className='ml-0 '>
+      <p className=' text-[20px] text-slate-500 mt-[12px] font-semibold  tracking-normal flex gap-2 items-center'><GiProgression className="text-[30px]" />Career lift</p>
+      <div className={'flex w-full bg-white h-[50px] top-0 z-10 {bgColor} fixed ml-[70px]'}>
+        <div className="flex items-center h-full absolute right-[100px] cursor-pointer" onClick={toggle}>
           <div className="flex gap-3 items-center">
             <FaUserCircle className="text-[45px] text-[#d9d9d9]"  />
             <p className="w-full mb-2 h-full flex items-center mt-2 text-slate-600 font-medium tracking-wide">{employee.FirstName} {employee.LastName}</p>

@@ -10,6 +10,8 @@ import EmployeeDetail from './Components/Employee/EmployeeDetail.jsx';
 import TaskManagement from './Components/Task/TaskManagement.jsx';
 import EmployeeList from './Components/Employee/EmployeeList.jsx';
 import Createtask from './Components/Task/tasks.jsx';
+import Calender from './Components/Calender.jsx';
+import EmployeeAttendanceSheet from './Components/Employee/EmployeeAttendanceSheet.jsx';
 
 function App() {
   return (
@@ -26,7 +28,8 @@ function App() {
         <Route path = '/task' element = {<TaskManagement/>}></Route>
         <Route path = '/tasks' element = {<Createtask/>}></Route>
         <Route path = '/employee' element = {<EmployeeList/>}></Route>
-        <Route path = '/completionreview' element = {<completionreview/>}></Route>
+        <Route path = '/calender' element = {<Calender/>}></Route>
+        <Route path = '/employeecalender' element = {<EmployeeAttendanceSheet/>}></Route>
        
       </Routes>
     </BrowserRouter>

@@ -22,6 +22,7 @@ const Attendance = () => {
     axios.get('http://localhost:8000/api/v1/employee/attendance')
       .then(response => {
         const fetchedEmployees = response.data;
+        console.log(fetchedEmployees)
         const initialAttendanceData = {};
 
         fetchedEmployees.forEach(employee => {
@@ -117,7 +118,7 @@ const Attendance = () => {
       <div className="grid gap-3">
         {currentEmployees.map(employee => (
           <div key={employee.EmployeeID} className="flex items-center p-2 bg-white shadow-md rounded-lg border border-gray-200 hover:shadow-xl transition duration-300 ease-in-out">
-            <img src={employee.ProfileImage} alt={`${employee.FirstName} ${employee.LastName}'s profile`} className="w-12 h-12 rounded-full mr-4 border border-gray-300"/>
+            <img src={employee.profileImage} alt={`${employee.FirstName} ${employee.LastName}'s profile`} className="w-12 h-12 rounded-full mr-4 border border-gray-300"/>
             <div className="flex-1">
               <p className="text-lg font-semibold text-gray-800">{employee.FirstName} {employee.LastName}</p>
               <p className="text-sm text-gray-500">Employee ID: {employee.EmployeeID}</p>

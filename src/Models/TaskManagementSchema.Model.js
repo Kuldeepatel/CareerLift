@@ -8,35 +8,37 @@ const TaskSchema = new Schema({
         unique: true,
         trim: true
     },
-    title: { 
-        type: String, 
+    title: {
+        type: String,
         trim: true
     },
     description: { 
         type: String  
-    }, 
+    },
     status: { 
         type: String, 
         enum: ['pending', 'due task', 'completed'], 
         default: 'pending' 
     },
-    dueDate: { 
-        type: String 
+    dueDate: {
+        type: String
     },
-    createdDate: { 
-        type: String 
+    createdDate: {
+        type: String
     },
-    createdBy: { 
+    createdBy: {
         type: Number,
-        trim: true 
+        required: true,
+        trim: true
+    }, 
+    completionDate: {
+        type: String
     },
-    completionDate: { 
-        type: String 
-    },
-    assignedTo: {  
+    assignedTo: [{  
         type: Number,
+        unique: true,
         trim: true 
-    }
+    }] 
 });
 
 const Task = mongoose.model('Task', TaskSchema);

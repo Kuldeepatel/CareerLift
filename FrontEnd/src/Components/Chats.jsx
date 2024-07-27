@@ -11,9 +11,6 @@ const Chats = () => {
   const [chats, setChats] = useState([]);
   const [employeeData, setEmployeeData] = useState('');
   const [messageInput, setMessageInput] = useState('');
-  const [file, setFile] = useState(null);
-  const [modalImage, setModalImage] = useState(null); // State to manage modal image
-  const chatContainerRef = useRef(null);
 
   // to get current time
   const getCurrentTime = () => {
@@ -23,7 +20,7 @@ const Chats = () => {
     const ampm = hours >= 12 ? 'PM' : 'AM';
     
     hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
+    hours = hours ? hours : 12; 
   
     const formattedTime = `${hours}:${minutes < 10 ? '0' + minutes : minutes} ${ampm}`;
     return formattedTime;
@@ -104,6 +101,45 @@ const Chats = () => {
 
   // Function to handle clicking on image
   const handleImageClick = (imageUrl) => {
+    setModalImage(imageUrl); 
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setModalImage(null); 
+  };
+
+  
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  };
+
+  // to get data of particular employee using employeeID
+  useEffect(() => {
+    const fetchEmployeeData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/v1/employee/${employeeID}`);
+        setEmployeeData(response.data);
+      } catch (error) {
+        console.error("Error during fetching Employee Data", error);
+      }
+    };
+  
+    fetchEmployeeData();
+  }, [employeeID]);
+  
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const removeFile = () => {
+    setFile(null);
+  };
+
+  // Function to handle clicking on image
+  const handleImageClick = (imageUrl) => {
     setModalImage(imageUrl); // Set modalImage state to the clicked image URL
   };
 
@@ -149,56 +185,13 @@ const Chats = () => {
         </div>
 
         {/* Chat Messages */}
-        <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4">
-          <div className="flex flex-col space-y-3">
+        <div className="flex-1 overflow-y-auto p-4">
+          <div className="flex flex-col space-y-4">
             {chats.map((chat, index) => (
-              <div key={index}>
-                {index === 0 || chats[index - 1].Date !== chat.Date ? (
-                  <div className="text-right text-gray-100 text-sm my-2">
-                    {chat.Date}
-                  </div>
-                ) : null}
-                <div className={`flex ${chat.EmployeeID === employeeID ? 'justify-start' : 'justify-end'}`}>
-                  {chat.EmployeeID === employeeID ? (
-                    <img 
-                      className='w-10 h-10 rounded-full object-cover cursor-pointer'
-                      src={chat.ProfileImage} 
-                      alt="profile" 
-                      onClick={() => handleImageClick(chat.ProfileImage)}
-                    />
-                  ) : null}
-                  <div className={`max-w-xs rounded-lg p-3 break-words ${chat.EmployeeID === employeeID ? 'bg-gray-200 text-black self-start ml-2' : 'bg-gray-200 text-black self-end ml-2'}`}>
-                    <p className="text-sm leading-tight mb-1">{chat.message}</p>
-                    {chat.file && (chat.file.toLowerCase().endsWith('.jpg') || chat.file.toLowerCase().endsWith('.png') || chat.file.toLowerCase().endsWith('.pdf')) ? (
-                      chat.file.toLowerCase().endsWith('.pdf') ? (
-                        <div className="max-w-full h-auto rounded-lg mt-1 cursor-pointer bg-gray-200 hover:bg-gray-300 flex items-center justify-center relative">
-                          {/* <span className="text-lg text-gray-600">PDF File</span> */}
-                          <button
-                            className="flex top-0 right-0 bg-blue-500 text-white text-xs px-2 py-1 rounded-bl-lg hover:bg-blue-600"
-                            onClick={() => handlePdfDownload(chat.file)}
-                          >
-                            PDF
-                          </button>
-                        </div>
-                      ) : (
-                        <img 
-                          src={chat.file}
-                          alt=""
-                          className="max-w-full h-auto rounded-lg mt-1 cursor-pointer"
-                          onClick={() => handleImageClick(chat.file)}
-                        />
-                      )
-                    ) : null}
-                    <span className="text-xs text-gray-500 justify-self-end">{chat.Time}</span>
-                  </div>
-                  {chat.EmployeeID !== employeeID ? (
-                    <img 
-                      className='w-10 h-10 rounded-full object-cover ml-2 cursor-pointer'
-                      src={chat.ProfileImage} 
-                      alt="profile" 
-                      onClick={() => handleImageClick(chat.ProfileImage)}
-                    />
-                  ) : null}
+              <div key={index} className={`flex ${chat.EmployeeID === employeeID ? 'justify-start' : 'justify-end'}`}>
+                <div className={`max-w-xs rounded-lg p-4 ${chat.EmployeeID === employeeID ? 'bg-gray-200 text-black self-end' : 'bg-blue-500 self-start text-white'}`}>
+                  <p>{chat.message}</p>
+                  <span className="text-sm text-gray-500">{chat.Time}</span>
                 </div>
               </div>
             ))}
@@ -206,60 +199,19 @@ const Chats = () => {
         </div>
 
         {/* Chat Input */}
-        <div className="p-2 border-t border-gray-300 flex items-center">
+        <div className="p-4 border-t border-gray-300 flex items-center">
           <input
-            type="file"
-            onChange={handleFileChange}
-            className="hidden"
-            id="fileInput"
-            accept="*"
+            type="text"
+            placeholder="Type a message..."
+            className="w-full p-2 border rounded-lg"
+            value={messageInput}
+            onChange={(e) => setMessageInput(e.target.value)}
           />
-          <label htmlFor="fileInput" className="cursor-pointer ml-2">
-            <FiFile className="text-blue-500 text-2xl" />
-          </label>
-        
-          <div className="flex-grow ml-2 relative">
-            {file && (
-              <div className="flex items-center pr-2">
-                <FiFile className="text-gray-500 mr-1" />
-                <span className="text-sm truncate">{file.name}</span>
-                <button
-                  className="ml-2 p-1 rounded-full bg-gray-300 hover:bg-gray-400"
-                  onClick={removeFile}
-                >
-                  <FiX className="text-gray-600" />
-                </button>
-              </div>
-            )}
-            <input
-              type="text"
-              className="w-full p-2 border-8 rounded-lg"
-              placeholder="Type a message..."
-              value={messageInput}
-              onChange={(e) => setMessageInput(e.target.value)}
-            />
-          </div>
-          <button className="ml-2 p-2  bg-blue-500 text-white rounded-full" onClick={sendMessage}>
+          <button className="ml-2 p-2 bg-blue-500 text-white rounded-full" onClick={sendMessage}>
             <FaPaperPlane />
           </button>
         </div>
       </div>
-
-      {/* Modal for Image Display */}
-      {modalImage && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black z-10">
-          <div className="max-w-screen-lg max-h-screen-lg relative flex justify-center item-center">
-            <img src={modalImage} alt="Full size" className="w-[100%] h-[100%]" />
-            <button
-              className="absolute top-4 right-4 p-2 rounded-full bg-white text-gray-800"
-              onClick={closeModal}
-            >
-              <FiX className="text-gray-800" />
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
     </div>
   );
 };

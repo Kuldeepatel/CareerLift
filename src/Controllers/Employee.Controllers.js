@@ -1,3 +1,4 @@
+
 const Employee = require('../Models/Employee.Models.js');
 const { uploadOnCloudinary } = require("../utils/cloudinary.js");
 const jwt = require("jsonwebtoken");
@@ -21,6 +22,7 @@ const generateAccessAndRefreshToken = async (userId) => {
 
 // Function to handle employee signup
 const signup = async (req, res) => {
+  console.log(req.body);
   const {
     FirstName, MiddleName, LastName, EmployeeID, Password, Email, Salary, Department, Age, Gender,
     PhoneNo, Position, DOB, DateOfJoining, Address, Qualifications, Skills, Awards, Experience
@@ -34,7 +36,7 @@ const signup = async (req, res) => {
     PhoneNo, Position, DateOfJoining, Qualifications].some((field) => !field)) {
     return res.status(400).json({ message: "All fields are required" });
   }
-
+ 
   // Check if profile image is uploaded
   const profileImageLocalPath = req.file?.path;
   if (!profileImageLocalPath) {
@@ -181,8 +183,9 @@ const getAllEmployee = async (req, res) => {
   try {
     const { employeeID } = req.params; 
     const employee = await Employee.findOne({ EmployeeID: employeeID }).select('-Password -refreshToken');
+    console.log(employee)
     res.status(200).json(employee);
-  } catch (error) {
+  } catch (error) { 
     res.status(500).json({ message: "Internal Server Error" });
   }
 };

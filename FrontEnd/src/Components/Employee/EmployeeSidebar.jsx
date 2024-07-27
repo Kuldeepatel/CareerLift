@@ -21,9 +21,16 @@ const Sidebar = () => {
     setIsExpanded(!isExpanded);
   };
 
-  const handleProfileSubmenuToggle = () => {
-    setProfileSubmenu(!profileSubmenu);
-  };
+  const menuItems = [
+    { to: "/employeedashboard", icon: RiDashboardLine, text: "Dashboard" },
+    { to: "/attendance", icon: PiCheckSquareOffset, text: "Attendance" },
+    { to: "/employee", icon: IoPeopleOutline, text: "Employee" },
+    { to: "/leave", icon: HiOutlineNewspaper, text: "Leave Application" },
+    { to: "/promotionranking", icon: MdOutlineLeaderboard, text: "Leaderboard" },
+    { to: "/task", icon: GoTasklist, text: "Task Management" },
+    { to: "/demo", icon: GoTasklist, text: "Demo" },
+    { to: `/chats/${employeeID}`, icon: GoTasklist, text: "Chats" },
+  ];
 
   return (
     <div className={`flex flex-col h-screen fixed bg-white shadow-lg p-1 z-30 transition-all duration-300 ${isExpanded ? 'w-[18%]' : 'w-[5%]'}`}>

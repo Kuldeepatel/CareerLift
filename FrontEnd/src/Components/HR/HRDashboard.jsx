@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SideBar from '../SideBar';
 import { useLocation } from 'react-router-dom';
+import EmployeeTopbar from '../Employee/EmployeeTopbar';
 
 const HRDashboard = () => {
   const location = useLocation();
@@ -31,6 +32,7 @@ const HRDashboard = () => {
 
   return (
     <div className="flex">
+      <EmployeeTopbar/>
       <SideBar />
       <div className="flex-grow p-6 ml-72">
         <h1 className="text-2xl font-bold mb-4">Dashboard</h1>

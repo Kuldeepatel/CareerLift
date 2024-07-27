@@ -108,13 +108,13 @@ const EmployeeProfile = () => {
     <div className="overflow-y-auto">
       <EmployeeSidebar />
       <EmployeeTopbar />
-      <div className="ml-[55px] pt-[10px] flex flex-col w-[100-18%]  h-full p-4">
-
-      <div className="flex flex-col h-fit">
-        <div className="flex flex-col bg-white m-3 rounded-lg">
-          <div className="flex justify-between items-center mb-4">
-            <h1 className="text-3xl font-bold">Dashboard</h1>
-            {/* <div className="text-lg">ROMIN</div> */}
+      <div className="ml-[18%] pt-[60px] flex flex-col w-[100-18%] h-full p-4 bg-white mt-10">
+        <div className="flex flex-col">
+          <div className="flex">
+            <p className="text-2xl border-l-4 rounded pl-2 h-fit border-[#7E3AF2]">
+              {greeting},
+            </p>
+            <p className="ml-2 text-2xl">{employee.FirstName}</p>
           </div>
           <div className="flex items-center ml-10 mb-6">
             <div className="mr-2">

@@ -2,40 +2,25 @@ const Task = require('../Models/TaskManagementSchema.Model');
 const Employee  = require('../Models/Employee.Models')
 //  to create or update task
 const createTask = async (req, res) => {
-  const { createdBy } = req.params; 
-  const { taskID, title, description, dueDate, assignedTo } = req.body;
+    const { createdBy } = req.params; 
+    const { taskID,title, description, status, dueDate, assignedTo,completionDate } = req.body;
 
-  // Log the incoming data for debugging
- // console.log(taskID, title, description, dueDate, assignedTo);
+    if (!taskID ) {
+        return res.status(400).send("taskID are required");
+    }
+    try {
+        const createdDate = getCurrentDate();
 
-  // Check if taskID is provided
-  if (!taskID) {
-      return res.status(400).send("taskID is required");
-  }
-
-  try {
-      const createdDate = getCurrentDate();
-
-      // Create or update task in the database
+        // Create or update task in the database
       const task = await Task.findOneAndUpdate(
-          { taskID },
-          { 
-              $set: { taskID, title, description, dueDate, assignedTo, createdBy, createdDate } 
-          },
-          { 
-              new: true, // Return the modified document rather than the original
-              upsert: true, // Create a new document if no matching document is found
-              setDefaultsOnInsert: true // Apply default values when creating a new document
-          }
-      );
-
-      // Send success response
-      return res.status(200).send("Task created or updated successfully");
-  } catch (error) {
-      // Log the error for debugging
-      console.error("Failed to create or update task:", error);
-      return res.status(500).send("Failed to create or update task");
-  }
+            { taskID },
+            { $set: { taskID, title, description, status, dueDate, assignedTo, createdBy, createdDate,completionDate } },
+            { new: true, upsert: true, setDefaultsOnInsert: true }
+        );
+        return res.status(200).send("Task created or updated successfully");
+    } catch (error) {
+        return res.status(500).send("Failed to create or update task");
+    }
 };
 
 // to get current date in YYYY-MM-DD format

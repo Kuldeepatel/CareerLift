@@ -214,3 +214,4 @@ EmployeeSchema.methods.generateRefreshToken = function () {
 const Employee = mongoose.model('Employee', EmployeeSchema);
 
 module.exports = Employee;
+ 

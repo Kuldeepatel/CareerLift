@@ -34,12 +34,12 @@ const TaskSchema = new Schema({
     completionDate: {
         type: String
     },
-    assignedTo: [{  
+    assignedTo: {  
         type: Number,
-        unique: true,
         trim: true 
-    }] 
+    }
 });
+
 
 const Task = mongoose.model('Task', TaskSchema);
 

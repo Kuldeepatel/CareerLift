@@ -107,7 +107,7 @@ function parseDate(dateStr) {
       });
   
       if (employees.length === 0) {
-        return res.status(404).send("No employees found");
+        return res.status(404).send("No employees found"); 
       }
   
       // Update each employee's record based on task completion status

@@ -13,7 +13,7 @@ const employeeSchema = new Schema({
         required: true
     },
     Tasks_completed: {
-        type: Number,
+        type: Number,  
         required: true
     },
     Due_tasks: {

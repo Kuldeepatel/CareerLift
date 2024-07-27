@@ -110,7 +110,7 @@ const TaskManagement = () => {
         <div className='ml-[5%] flex flex-col w-[100-18%] p-4 bg-white'>
           <div className='flex justify-between items-center mb-5'>
             <h1 className='text-4xl border-l-[#1B67D9] border-l-4 rounded h-fit pl-4 text-slate-700'>Task Management</h1>
-            <button onClick={() => navigate('/tasks')} className='mt-7 mr-2 bg-[#1B67D9] text-white px-4 py-2 rounded-md hover:bg-opacity-80 flex items-center'>
+            <button onClick={() => navigate('/createtask')} className='mt-7 mr-2 bg-[#1B67D9] text-white px-4 py-2 rounded-md hover:bg-opacity-80 flex items-center'>
               <FontAwesomeIcon icon={faPlus} className='mr-2' />
               Create Task
             </button>

@@ -11,6 +11,9 @@ const Chats = () => {
   const [chats, setChats] = useState([]);
   const [employeeData, setEmployeeData] = useState('');
   const [messageInput, setMessageInput] = useState('');
+  const [file, setFile] = useState(null);
+  const [modalImage, setModalImage] = useState(null);
+  const chatContainerRef = useRef(null);
 
   // to get current time
   const getCurrentTime = () => {
@@ -109,45 +112,6 @@ const Chats = () => {
     setModalImage(null); 
   };
 
-  
-  const scrollToBottom = () => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  };
-
-  // to get data of particular employee using employeeID
-  useEffect(() => {
-    const fetchEmployeeData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8000/api/v1/employee/${employeeID}`);
-        setEmployeeData(response.data);
-      } catch (error) {
-        console.error("Error during fetching Employee Data", error);
-      }
-    };
-  
-    fetchEmployeeData();
-  }, [employeeID]);
-  
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
-  const removeFile = () => {
-    setFile(null);
-  };
-
-  // Function to handle clicking on image
-  const handleImageClick = (imageUrl) => {
-    setModalImage(imageUrl); // Set modalImage state to the clicked image URL
-  };
-
-  // Function to close the modal
-  const closeModal = () => {
-    setModalImage(null); // Clear modalImage state to close the modal
-  };
-
   // Function to scroll chat container to bottom
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
@@ -174,42 +138,43 @@ const Chats = () => {
   //DESIGN CODE 
   return (
     <div>
-    <EmployeeTopbar bgColor='bg-red-500' />
-    <div className="flex h-screen bg-gray-100">
-      <SideBar />
-      {/* Chat Area */}
-      <div className="ml-[18%] flex flex-col w-full h-full p-4">
-        {/* Chat Header */}
-        <div className="flex items-center justify-between pt-[3%] pb-[1%] border-b border-gray-300">
-          <h1 className="text-4xl border-l-[#1B67D9] border-l-4 rounded h-fit pl-4 text-slate-700">Chats</h1>
-        </div>
-
-        {/* Chat Messages */}
-        <div className="flex-1 overflow-y-auto p-4">
-          <div className="flex flex-col space-y-4">
-            {chats.map((chat, index) => (
-              <div key={index} className={`flex ${chat.EmployeeID === employeeID ? 'justify-start' : 'justify-end'}`}>
-                <div className={`max-w-xs rounded-lg p-4 ${chat.EmployeeID === employeeID ? 'bg-gray-200 text-black self-end' : 'bg-blue-500 self-start text-white'}`}>
-                  <p>{chat.message}</p>
-                  <span className="text-sm text-gray-500">{chat.Time}</span>
-                </div>
-              </div>
-            ))}
+      <EmployeeTopbar bgColor='bg-red-500' />
+      <div className="flex h-screen bg-gray-100">
+        <SideBar />
+        {/* Chat Area */}
+        <div className="ml-[18%] flex flex-col w-full h-full p-4">
+          {/* Chat Header */}
+          <div className="flex items-center justify-between pt-[3%] pb-[1%] border-b border-gray-300">
+            <h1 className="text-4xl border-l-[#1B67D9] border-l-4 rounded h-fit pl-4 text-slate-700">Chats</h1>
           </div>
-        </div>
 
-        {/* Chat Input */}
-        <div className="p-4 border-t border-gray-300 flex items-center">
-          <input
-            type="text"
-            placeholder="Type a message..."
-            className="w-full p-2 border rounded-lg"
-            value={messageInput}
-            onChange={(e) => setMessageInput(e.target.value)}
-          />
-          <button className="ml-2 p-2 bg-blue-500 text-white rounded-full" onClick={sendMessage}>
-            <FaPaperPlane />
-          </button>
+          {/* Chat Messages */}
+          <div className="flex-1 overflow-y-auto p-4" ref={chatContainerRef}>
+            <div className="flex flex-col space-y-4">
+              {chats.map((chat, index) => (
+                <div key={index} className={`flex ${chat.EmployeeID === employeeID ? 'justify-start' : 'justify-end'}`}>
+                  <div className={`max-w-xs rounded-lg p-4 ${chat.EmployeeID === employeeID ? 'bg-gray-200 text-black self-end' : 'bg-blue-500 self-start text-white'}`}>
+                    <p>{chat.message}</p>
+                    <span className="text-sm text-gray-500">{chat.Time}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Chat Input */}
+          <div className="p-4 border-t border-gray-300 flex items-center">
+            <input
+              type="text"
+              placeholder="Type a message..."
+              className="w-full p-2 border rounded-lg"
+              value={messageInput}
+              onChange={(e) => setMessageInput(e.target.value)}
+            />
+            <button className="ml-2 p-2 bg-blue-500 text-white rounded-full" onClick={sendMessage}>
+              <FaPaperPlane />
+            </button>
+          </div>
         </div>
       </div>
     </div>

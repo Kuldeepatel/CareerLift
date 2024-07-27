@@ -6,7 +6,12 @@ import Attendance from './Components/Attandance.jsx';
 import PromotionRanking from './Components/HR/PromotionRanking.jsx';
 import EmployeeProfile from './Components/Employee/EmployeeProfile.jsx';
 import Chats from './Components/Chats.jsx';
+import EmployeeList from './Components/Employee/EmployeeList.jsx';
+import TaskManagement from './Components/Task/TaskManagement.jsx'
+//import Tasks from './Components/Employee/Tasks.jsx'
+import Tasks from './Components/Task/tasks.jsx'
 
+import EmployeeDetail from './Components/Employee/EmployeeDetail.jsx'
 function App() {
   return (
     <BrowserRouter>
@@ -15,9 +20,12 @@ function App() {
         <Route path='/hrdashboard' element={<HRDashboard/>}/>
         <Route path="/" element={<LoginPage />} />
         <Route path="/attendance" element={<Attendance />} />
+        <Route path="/employeelist" element={<EmployeeList />} />
         <Route path = '/promotionranking' element = {<PromotionRanking/>}></Route>
-        <Route path = '/profile' element = {<EmployeeProfile/>}></Route>
+        <Route path = '/profile' element = {<EmployeeDetail/>}></Route>
         <Route path = '/chats/:employeeID' element = {<Chats/>}></Route>
+        <Route path = '/task' element = {<TaskManagement/>}></Route>
+        <Route path = '/createtask' element = {<Tasks/>}></Route>
        
       </Routes>
     </BrowserRouter>

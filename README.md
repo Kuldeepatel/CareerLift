@@ -4,7 +4,7 @@
 CareerLift is an innovative employee promotion system designed to automate and streamline the promotion process within an organization. This system utilizes a logistic regression model to ensure fair and unbiased promotion decisions based on multiple performance metrics. 
 
 ## Key Features
-- **Task Management**: Efficiently manage tasks assigned to employees, track progress, and ensure timely completion.
+- **Task Management**: Efficiently manage tasks assigned to employees, and ensure timely completion, and task review.
 - **Attendance Management**: Monitor and record employee attendance, providing insights into attendance patterns.
 - **Employee Management**: Create, update, and delete employee profiles with ease, maintaining an up-to-date employee database.
 - **Group Chats**: Facilitate seamless communication among employees through group chats, enhancing collaboration and team synergy.

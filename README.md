@@ -1,7 +1,7 @@
 # CareerLift - Employee Promotion System
 
 ## Project Overview
-CareerLift is an innovative employee promotion system designed to automate and streamline the promotion process within an organization. This system utilizes a logistic regression model to ensure fair and unbiased promotion decisions based on multiple performance metrics. 
+CareerLift is an innovative Employee Promotion Prediction System for HR Management designed to automate and streamline the promotion process within an organization. This system utilizes a logistic regression model to ensure fair and unbiased promotion decisions based on multiple performance metrics. 
 
 ## Key Features
 - **Task Management**: Efficiently manage tasks assigned to employees, and ensure timely completion, and task review.

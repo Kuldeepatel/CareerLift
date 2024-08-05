@@ -22,3 +22,15 @@ The logistic regression model in CareerLift evaluates employees based on the fol
 - **YearsWithCompany**: Duration of the employee’s tenure with the company.
 - **YearsInIndustry**: Total experience of the employee in the industry.
 
+## Team Members
+
+- **Kuldeep Patel** - Model training, API design, Frontend and backend Implementation
+- **Romin Mistry** - System Designing, Frontend Designing and Development
+- **Raj Sahoo** - ML model selection and Dataset Handler
+- **Karan Prajapati** - Frontend Development
+- **Aditya Rupda** - Model Testing and Documentation
+- **Dhruv Kasundra** - Model Testing and Documentation
+  
+## Mentor
+
+- **Gaurav Mandloi**

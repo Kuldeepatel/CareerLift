@@ -24,4 +24,4 @@ The logistic regression model in CareerLift evaluates employees based on the fol
 ## Team Members
 
 - **Kuldeep Patel** - Model training, API design, Frontend and backend Implementation
-- **Romin Mistry** - System Designing, Frontend Designing and Development
+- **Romin Mistry** - Frontend Designing
